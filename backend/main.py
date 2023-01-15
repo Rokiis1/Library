@@ -13,10 +13,6 @@ except Exception as e:
 
 app.include_router(router)
 
-@app.on_event("shutdown")
-def close_connection():
-    close_connection(conn)
-
 if __name__ == "__main__":
     conn = get_connection()
     # create_table(conn)
