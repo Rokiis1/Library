@@ -3,7 +3,7 @@ import psycopg2
 
 def get_connection():
     conn = psycopg2.connect(
-        host="db.uzfyszuaseakoacmgvpt.supabase.co",
+        host="database-1.cimi9tl7ksk8.eu-west-2.rds.amazonaws.com",
         database="postgres",
         port="5432",
         user="postgres",
