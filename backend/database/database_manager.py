@@ -3,7 +3,7 @@ import psycopg2
 
 def get_connection():
     conn = psycopg2.connect(
-        host="database-1.cimi9tl7ksk8.eu-west-2.rds.amazonaws.com",
+        host="library.cimi9tl7ksk8.eu-west-2.rds.amazonaws.com",
         database="postgres",
         port="5432",
         user="postgres",
@@ -20,6 +20,7 @@ def create_table(conn):
     query = """
         CREATE TABLE users (
             id SERIAL PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
             hashed_password VARCHAR(255) NOT NULL,
             is_active BOOLEAN DEFAULT true NOT NULL
@@ -29,3 +30,4 @@ def create_table(conn):
     conn.commit()
     print("Table created successfully")
     cursor.close()
+    

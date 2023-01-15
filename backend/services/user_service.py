@@ -11,7 +11,7 @@ async def register(user: User):
         conn = await database_manager.get_connection()
         cur = await conn.cursor()
         hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt())
-        query = f"INSERT INTO users (username, email, password) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}')"
+        query = f"INSERT INTO users (username, email, hashed_password, is_active) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}', {user.is_active})"
         await cur.execute(query)
         await conn.commit()
         return {"message": "User registered successfully"}

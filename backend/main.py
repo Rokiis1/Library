@@ -15,5 +15,5 @@ app.include_router(router)
 
 if __name__ == "__main__":
     conn = get_connection()
-    # create_table(conn)
+    create_table(conn)
     uvicorn.run(app, port=8080)
