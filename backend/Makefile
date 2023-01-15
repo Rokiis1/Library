@@ -1,7 +1,7 @@
 install:
 		#install commands
-		pip install --upgrade pip &&\
-			pip install -r requirements.txt
+		pip3 install --upgrade pip &&\
+			pip3 install -r requirements.txt
 format:
 		#format code
 		black *.py database/*.py services/*.py routes/*.py models/*.py

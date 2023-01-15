@@ -1,9 +1,8 @@
 import bcrypt
 from fastapi import HTTPException
-from typing import Dict
+import jwt
 from models.user import User
 from database import database_manager
-import jwt
 
 
 async def register(user: User):

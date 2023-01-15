@@ -14,3 +14,18 @@ def get_connection():
 
 def close_connection(conn):
     conn.close()
+
+def create_table(conn):
+    cursor = conn.cursor()
+    query = """
+        CREATE TABLE users (
+            id SERIAL PRIMARY KEY,
+            email VARCHAR(255) NOT NULL,
+            hashed_password VARCHAR(255) NOT NULL,
+            is_active BOOLEAN DEFAULT true NOT NULL
+        );
+    """
+    cursor.execute(query)
+    conn.commit()
+    print("Table created successfully")
+    cursor.close()
