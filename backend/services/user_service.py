@@ -1,3 +1,4 @@
+import asyncpg
 import bcrypt
 from fastapi import HTTPException
 import jwt
@@ -12,28 +13,19 @@ async def register(user: User):
         print(e)
         raise HTTPException(status_code=500, detail="An error occurred while connecting to the database")
     try:
-        cur = await conn.cursor()
         hashed_password = bcrypt.hashpw(user.hashed_password.encode(), bcrypt.gensalt())
         query = f"INSERT INTO users (username, email, hashed_password, is_active) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}', {user.is_active})"
-        try:
-            await cur.execute(query)
-            await conn.commit()
-        except Exception as e:
-            print(e)
-            raise HTTPException(status_code=500, detail="An error occurred while executing the query")
+        await conn.execute(query)
         return {"message": "User registered successfully"}
+    except asyncpg.exceptions.UniqueViolationError:
+        raise HTTPException(status_code=400, detail="Username or email already taken")
+    except asyncpg.exceptions.NotNullViolationError:
+        raise HTTPException(status_code=400, detail="Missing required field")
     except Exception as e:
-        if "duplicate key value violates unique constraint" in str(e):
-            raise HTTPException(
-                status_code=400, detail="Username or email already taken"
-            )
-        elif "null value in column" in str(e):
-            raise HTTPException(status_code=400, detail="Missing required field")
-        else:
-            raise HTTPException(
-                status_code=500, detail="An error occurred while registering the user"
-            )
-
+        print(e)
+        raise HTTPException(status_code=500, detail="An error occurred while registering the user")
+    finally:
+        await conn.close()
 
 async def login(user: User):
     conn = database_manager.get_connection()

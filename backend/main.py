@@ -18,5 +18,4 @@ app.include_router(router)
 
 if __name__ == "__main__":
     conn = asyncio.run(main())
-    # create_table(conn)
     uvicorn.run(app, port=8080)

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from models.user import User
 from services import user_service
 
@@ -10,8 +10,11 @@ async def register(user: User):
     """
     register user
     """
-    return await user_service.register(user)
-
+    try:
+       result = await user_service.register(user)
+       return result
+    except HTTPException as e:
+        raise e
 
 @router.post("/login")
 async def login(user: User):
