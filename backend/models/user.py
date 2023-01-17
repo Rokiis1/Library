@@ -1,8 +1,9 @@
-from pydantic import BaseModel
+from typing import Optional
+from pydantic import BaseModel as PydanticBaseModel
 
 
-class User(BaseModel):
-    username: str
-    email: str
+class User(PydanticBaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
     hashed_password: str
     is_active: bool = True

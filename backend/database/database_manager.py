@@ -2,7 +2,6 @@ from fastapi import HTTPException
 import asyncpg
 
 
-
 async def get_connection():
     try:
         conn = await asyncpg.create_pool(
@@ -14,15 +13,20 @@ async def get_connection():
         )
         return conn
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred while connecting to the database: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred while connecting to the database: {e}",
+        )
 
 
 def close_connection(conn):
     conn.close()
 
+
 async def create_table(conn):
     try:
-        await conn.execute("""
+        await conn.execute(
+            """
             CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
                 username VARCHAR(255) NOT NULL UNIQUE,
@@ -30,9 +34,11 @@ async def create_table(conn):
                 hashed_password VARCHAR(255) NOT NULL,
                 is_active BOOLEAN DEFAULT true NOT NULL
             );
-        """)
+        """
+        )
         conn.commit()
         print("Table created successfully")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred while creating the table: {e}")
-    
+        raise HTTPException(
+            status_code=500, detail=f"An error occurred while creating the table: {e}"
+        )
