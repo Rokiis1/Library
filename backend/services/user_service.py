@@ -25,3 +25,20 @@ async def register(user: User):
         ) from e
     finally:
         await conn.close()
+        
+async def login(user: User):
+    conn = await database_manager.get_connection()
+    try:
+        query = f"SELECT * FROM users WHERE email='{user.email}'"
+        result = await conn.fetchrow(query)
+        if not result:
+            raise HTTPException(status_code=400, detail="Incorrect email or password")
+        hashed_password = result['hashed_password']
+        if bcrypt.checkpw(user.hashed_password.encode(), hashed_password.encode()):
+            return {"message": "Logged in successfully"}
+        else:
+            raise HTTPException(status_code=400, detail="Incorrect email or password")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="An error occurred while logging in") from e
+    finally:
+        await conn.close()
