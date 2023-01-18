@@ -12,14 +12,16 @@ async def register(user: User):
         query = f"INSERT INTO users (username, email, hashed_password, is_active) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}', {user.is_active})"
         await conn.execute(query)
         return {"message": "User registered successfully"}
-    except asyncpg.exceptions.UniqueViolationError as exc:
-        raise HTTPException(status_code=400, detail="Username or email already taken") from exc
+    except asyncpg.exceptions.UniqueViolationError as e:
+        raise HTTPException(
+            status_code=400, detail="Username or email already taken"
+        ) from e
     except asyncpg.exceptions.NotNullViolationError as exc:
-        raise HTTPException(status_code=400, detail="Missing required field")
+        raise HTTPException(status_code=400, detail="Missing required field") from exc
     except Exception as e:
         print(e)
         raise HTTPException(
             status_code=500, detail="An error occurred while registering the user"
-        )
+        ) from e
     finally:
         await conn.close()
