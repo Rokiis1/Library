@@ -6,6 +6,8 @@ from database import database_manager
 
 
 async def register(user: User):
+    if user.hashed_password != user.repeat_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match")
     try:
         conn = await database_manager.get_connection()
         hashed_password = bcrypt.hashpw(user.hashed_password.encode(), bcrypt.gensalt())
