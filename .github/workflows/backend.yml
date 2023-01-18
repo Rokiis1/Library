@@ -1,26 +1,31 @@
-name: Check backend
+name: Backend CI/CD
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.11.0
+    - name: Set up Python 3.11.1
       uses: actions/setup-python@v1
       with:
-        python-version: 3.11.0
+        python-version: 3.11.1
     - name: Install dependencies
       run: |
+        cd backend
         make install
     - name: Lint with pylint
       run: |
+        cd backend
         make lint
     - name: Test with pytest
       run: |
+        cd backend
         make test
     - name: Format code
       run: |
+        cd backend
         make format
     - name: Build Container
       run: |
+        cd backend
         make build
