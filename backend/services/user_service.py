@@ -9,7 +9,7 @@ async def register(user: RegisterUser):
     try:
         conn = await database_manager.get_connection()
         hashed_password = bcrypt.hashpw(user.hashed_password.encode(), bcrypt.gensalt())
-        query = f"INSERT INTO users (username, email, hashed_password, is_active) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}', {user.is_active})"
+        query = f"INSERT INTO users (username, email, hashed_password) VALUES ('{user.username}', '{user.email}', '{hashed_password.decode()}')"
         await conn.execute(query)
         return {"message": "User registered successfully"}
     except asyncpg.exceptions.UniqueViolationError as e:
@@ -30,7 +30,7 @@ async def register(user: RegisterUser):
 async def login(user: LoginUser):
     conn = await database_manager.get_connection()
     try:
-        query = f"SELECT * FROM users WHERE email=$1"
+        query = "SELECT * FROM users WHERE email=$1"
         result = await conn.fetchrow(query, user.email)
         if not result:
             raise HTTPException(status_code=400, detail="Incorrect email or password")

@@ -7,6 +7,3 @@ class Book(BaseModel):
     author: str
     year: int
     image: Optional[str] = None
-
-
-

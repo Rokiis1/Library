@@ -31,6 +31,7 @@ async def login(user: LoginUser):
     except HTTPException as e:
         raise e
 
+
 @router.get("/books/")
 async def read_all_books():
     try:
@@ -38,7 +39,8 @@ async def read_all_books():
         return result
     except HTTPException as e:
         raise e
-    
+
+
 @router.get("/books/{book_id}")
 async def read_book(book_id: int):
     try:
@@ -46,6 +48,7 @@ async def read_book(book_id: int):
         return result
     except HTTPException as e:
         raise e
+
 
 @router.post("/book")
 async def create_book(book: Book):
@@ -55,6 +58,7 @@ async def create_book(book: Book):
     except HTTPException as e:
         raise e
 
+
 @router.put("/books/{book_id}")
 async def update_whole_book(book_id: int, book: Book):
     try:
@@ -63,13 +67,15 @@ async def update_whole_book(book_id: int, book: Book):
     except HTTPException as e:
         raise e
 
-@router.delete("/books/{id}")
-async def delete_book(id: int):
+
+@router.delete("/books/{book_id}")
+async def delete_book(book_id: int):
     try:
-        result = await book_service.delete_book(id)
+        result = await book_service.delete_book(book_id)
         return result
     except HTTPException as e:
         raise e
+
 
 @router.patch("/books/{book_id}")
 async def update_book(book_id: int, updates: dict):
