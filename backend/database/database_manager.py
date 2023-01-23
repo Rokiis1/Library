@@ -1,15 +1,18 @@
 from fastapi import HTTPException
 import asyncpg
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 async def get_connection():
     try:
         conn = await asyncpg.create_pool(
-            host="db.uzfyszuaseakoacmgvpt.supabase.co",
-            database="postgres",
-            port="5432",
-            user="postgres",
-            password="GdX1ZhGsBV0h68Cu",
+            host=os.getenv("DATABASE_HOST"),
+            database=os.getenv("DATABASE_NAME"),
+            port=os.getenv("DATABASE_PORT"),
+            user=os.getenv("DATABASE_USER"),
+            password=os.getenv("DATABASE_PASSWORD"),
         )
         return conn
     except Exception as e:
