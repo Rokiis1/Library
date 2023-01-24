@@ -25,7 +25,6 @@ jobs:
       run: |
         cd backend
         make format
-    - name: Build Container
+    - name: Build Containers
       run: |
-        cd backend
-        make build
+        docker-compose up
