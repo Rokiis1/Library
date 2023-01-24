@@ -1,10 +1,13 @@
-FROM python:3.11-slim-buster
+FROM python:3.10.9-slim-buster
 
-RUN mkdir -p /app
-COPY . main.py /app/
-WORKDIR /app
-RUN pip install -r requirements.txt
-RUN python main.py
-EXPOSE 8080
-CMD [ "main.py" ]
-ENTRYPOINT [ "python" ]
+WORKDIR /backend
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONBUFFERED 1
+
+# install python dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /backend
