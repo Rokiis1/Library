@@ -25,7 +25,7 @@ jobs:
       run: |
         cd backend
         make format
-    # - name: Build Container
-    #   run: |
-    #     cd backend
-    #     make build
+    - name: Build Container
+      run: |
+        cd backend
+        make build
