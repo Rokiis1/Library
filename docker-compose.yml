@@ -12,11 +12,11 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - DATABASE_HOST: ${DATABASE_HOST}
-      - DATABASE_NAME: ${DATABASE_NAME}
-      - DATABASE_PORT: ${DATABASE_PORT}
-      - DATABASE_USER: ${DATABASE_USER}
-      - DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      - DATABASE_HOST: {{ DATABASE_HOST }}
+      - DATABASE_NAME: {{ DATABASE_NAME }}
+      - DATABASE_PORT: {{ DATABASE_PORT }}
+      - DATABASE_USER: {{ DATABASE_USER }}
+      - DATABASE_PASSWORD: {{ DATABASE_PASSWORD }}
     ports:
       - 8000:8000
     depends_on:
@@ -29,11 +29,11 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - DATABASE_HOST: ${DATABASE_HOST}
-      - DATABASE_NAME: ${DATABASE_NAME}
-      - DATABASE_PORT: ${DATABASE_PORT}
-      - DATABASE_USER: ${DATABASE_USER}
-      - DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      - DATABASE_HOST: {{ DATABASE_HOST }}
+      - DATABASE_NAME: {{ DATABASE_NAME }}
+      - DATABASE_PORT: {{ DATABASE_PORT }}
+      - DATABASE_USER: {{ DATABASE_USER }}
+      - DATABASE_PASSWORD: {{ DATABASE_PASSWORD }}
     ports:
       - 5432:5432
 
