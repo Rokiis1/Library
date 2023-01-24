@@ -25,6 +25,13 @@ jobs:
       run: |
         cd backend
         make format
+    - name: Print secrets
+      run: |
+       echo "DATABASE_HOST = ${{ secrets.DATABASE_HOST }}"
+       echo "DATABASE_NAME = ${{ secrets.DATABASE_NAME }}"
+       echo "DATABASE_PORT = ${{ secrets.DATABASE_PORT }}"
+       echo "DATABASE_USER = ${{ secrets.DATABASE_USER }}"
+       echo "DATABASE_PASSWORD = ${{ secrets.DATABASE_PASSWORD }}"
     - name: Build Containers
       run: |
         docker-compose up
@@ -34,10 +41,3 @@ jobs:
         DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
         DATABASE_USER: ${{ secrets.DATABASE_USER }}
         DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-    - name: Print secrets
-      run: |
-       echo "DATABASE_HOST = ${{ secrets.DATABASE_HOST }}"
-       echo "DATABASE_NAME = ${{ secrets.DATABASE_NAME }}"
-       echo "DATABASE_PORT = ${{ secrets.DATABASE_PORT }}"
-       echo "DATABASE_USER = ${{ secrets.DATABASE_USER }}"
-       echo "DATABASE_PASSWORD = ${{ secrets.DATABASE_PASSWORD }}"
