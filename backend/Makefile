@@ -11,6 +11,3 @@ lint:
 test:
 		#test
 		python -m pytest -vv test/test_database_manager.py test/test_main.py test/test_book_service.py
-build:
-		#build container
-		docker build -t rokiis1/backend-library .
